@@ -24,6 +24,17 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     newList.removeAt(index);
     state = newList;
   }
+
+  void toggleTodo(int index) {
+    final todo = state[index];
+
+    final updatedTodo = todo.copyWith(isDone: !todo.isDone);
+
+    final newList = [...state];
+    newList[index] = updatedTodo;
+
+    state = newList;
+  }
 }
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
