@@ -14,7 +14,6 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       description: description,
       createdAt: DateTime.now(),
       image: "",
-      status: "IN_PROGRESS",
     );
 
     state = [...state, todo];

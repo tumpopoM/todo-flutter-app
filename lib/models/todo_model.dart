@@ -3,17 +3,33 @@ class Todo {
   final String title;
   final String description;
   final DateTime createdAt;
-  final String image;
-  final String status;
+  final String? image;
+  final bool isDone;
 
   Todo({
     required this.id,
     required this.title,
     required this.description,
     required this.createdAt,
-    required this.image,
-    required this.status,
+    this.image,
+    this.isDone = false,
   });
-}
 
-enum TodoStatus { inProgress, completed }
+  Todo copyWith({
+    String? id,
+    String? title,
+    String? description,
+    DateTime? createdAt,
+    String? image,
+    bool? isDone,
+  }) {
+    return Todo(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      image: image ?? this.image,
+      isDone: isDone ?? this.isDone,
+    );
+  }
+}
