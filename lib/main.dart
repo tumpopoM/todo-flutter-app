@@ -38,6 +38,12 @@ class TodoHomePage extends ConsumerWidget {
           return ListTile(
             title: Text(todo.title),
             subtitle: Text(todo.description),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                ref.read(todoProvider.notifier).removeTodo(index);
+              },
+            ),
           );
         },
       ),
