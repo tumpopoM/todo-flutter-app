@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_flutter_app/screens/create_todo_creen.dart';
 import 'providers/todo_provider.dart';
 
 void main() {
@@ -41,7 +42,13 @@ class TodoHomePage extends ConsumerWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreateTodoScreen()),
+          );
+        },
+
         child: const Icon(Icons.add),
       ),
     );
