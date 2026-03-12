@@ -13,7 +13,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       title: title,
       description: description,
       createdAt: DateTime.now(),
-      image: "",
+      image: null,
     );
 
     state = [...state, todo];
