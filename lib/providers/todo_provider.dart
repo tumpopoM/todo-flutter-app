@@ -7,10 +7,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
   final uuid = const Uuid();
   String _searchQuery = "";
+  String _sortType = "date";
   List<Todo> _allTodos = [];
 
   void setSearchQuery(String query) {
     _searchQuery = query.toLowerCase();
+    _applyFilters();
+  }
+
+  void setSortType(String type) {
+    _sortType = type;
     _applyFilters();
   }
 
@@ -19,6 +25,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       return todo.title.toLowerCase().contains(_searchQuery) ||
           todo.description.toLowerCase().contains(_searchQuery);
     }).toList();
+
+    if (_sortType == "title") {
+      filtered.sort((a, b) => a.title.compareTo(b.title));
+    } else if (_sortType == "date") {
+      filtered.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    } else if (_sortType == "status") {
+      filtered.sort(
+        (a, b) => a.isDone.toString().compareTo(b.isDone.toString()),
+      );
+    }
 
     state = filtered;
   }
