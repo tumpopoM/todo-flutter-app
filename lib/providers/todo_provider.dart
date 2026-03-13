@@ -46,8 +46,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
     final updatedTodo = todo.copyWith(isDone: !todo.isDone);
 
-    final newList = [...state];
-    newList[index] = updatedTodo;
+    _allTodos[index] = updatedTodo;
 
     _applyFilters();
   }
