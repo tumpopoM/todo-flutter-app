@@ -17,8 +17,20 @@ class TodoListScreen extends ConsumerWidget {
           final todo = todos[index];
 
           return ListTile(
+            leading: Checkbox(
+              value: todo.isDone,
+              onChanged: (_) {
+                ref.read(todoProvider.notifier).toggleTodo(index);
+              },
+            ),
             title: Text(todo.title),
             subtitle: Text(todo.description),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                ref.read(todoProvider.notifier).removeTodo(index);
+              },
+            ),
           );
         },
       ),
