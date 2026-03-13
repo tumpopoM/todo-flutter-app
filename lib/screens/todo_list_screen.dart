@@ -11,37 +11,50 @@ class TodoListScreen extends ConsumerWidget {
     final todos = ref.watch(todoProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Todo List')),
-      body: todos.isEmpty
-          ? const Center(
-              child: Text(
-                "No Todo yet.\nTap + to create one",
-                textAlign: TextAlign.center,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: const InputDecoration(
+                hintText: "Search...",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
               ),
-            )
-          : ListView.builder(
-              itemCount: todos.length,
-              itemBuilder: (context, index) {
-                final todo = todos[index];
-
-                return ListTile(
-                  leading: Checkbox(
-                    value: todo.isDone,
-                    onChanged: (_) {
-                      ref.read(todoProvider.notifier).toggleTodo(index);
-                    },
-                  ),
-                  title: Text(todo.title),
-                  subtitle: Text(todo.description),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      ref.read(todoProvider.notifier).removeTodo(index);
-                    },
-                  ),
-                );
+              onChanged: (value) {
+                ref.read(todoProvider.notifier).setSearchQuery(value);
               },
             ),
+          ),
 
+          Expanded(
+            child: todos.isEmpty
+                ? const Center(
+                    child: Text(
+                      "No Todo yet.\nTap + to create one",
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: todos.length,
+                    itemBuilder: (context, index) {
+                      final todo = todos[index];
+
+                      return ListTile(
+                        title: Text(todo.title),
+                        subtitle: Text(todo.description),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () {
+                            ref.read(todoProvider.notifier).removeTodo(index);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(

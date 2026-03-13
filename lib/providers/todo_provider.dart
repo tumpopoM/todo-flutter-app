@@ -7,6 +7,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
   final uuid = const Uuid();
   String _searchQuery = "";
+  List<Todo> _allTodos = [];
 
   void setSearchQuery(String query) {
     _searchQuery = query.toLowerCase();
@@ -14,10 +15,11 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   }
 
   void _applyFilters() {
-    final filtered = state.where((todo) {
+    final filtered = _allTodos.where((todo) {
       return todo.title.toLowerCase().contains(_searchQuery) ||
           todo.description.toLowerCase().contains(_searchQuery);
     }).toList();
+
     state = filtered;
   }
 
@@ -30,24 +32,24 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       image: null,
     );
 
-    state = [...state, todo];
+    _allTodos = [..._allTodos, todo];
+    _applyFilters();
   }
 
   void removeTodo(int index) {
-    final newList = [...state];
-    newList.removeAt(index);
-    state = newList;
+    _allTodos.removeAt(index);
+    _applyFilters();
   }
 
   void toggleTodo(int index) {
-    final todo = state[index];
+    final todo = _allTodos[index];
 
     final updatedTodo = todo.copyWith(isDone: !todo.isDone);
 
     final newList = [...state];
     newList[index] = updatedTodo;
 
-    state = newList;
+    _applyFilters();
   }
 }
 
