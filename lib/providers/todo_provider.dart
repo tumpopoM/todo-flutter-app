@@ -6,6 +6,20 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   TodoNotifier() : super([]);
 
   final uuid = const Uuid();
+  String _searchQuery = "";
+
+  void setSearchQuery(String query) {
+    _searchQuery = query.toLowerCase();
+    _applyFilters();
+  }
+
+  void _applyFilters() {
+    final filtered = state.where((todo) {
+      return todo.title.toLowerCase().contains(_searchQuery) ||
+          todo.description.toLowerCase().contains(_searchQuery);
+    }).toList();
+    state = filtered;
+  }
 
   void addTodo(String title, String description) {
     final todo = Todo(
