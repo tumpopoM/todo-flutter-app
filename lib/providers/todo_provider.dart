@@ -52,18 +52,18 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     _applyFilters();
   }
 
-  void removeTodo(int index) {
-    _allTodos.removeAt(index);
+  void removeTodo(String id) {
+    _allTodos.removeWhere((todo) => todo.id == id);
     _applyFilters();
   }
 
-  void toggleTodo(int index) {
-    final todo = _allTodos[index];
-
-    final updatedTodo = todo.copyWith(isDone: !todo.isDone);
-
-    _allTodos[index] = updatedTodo;
-
+  void toggleTodo(String id) {
+    _allTodos = _allTodos.map((todo) {
+      if (todo.id == id) {
+        return todo.copyWith(isDone: !todo.isDone);
+      }
+      return todo;
+    }).toList();
     _applyFilters();
   }
 }
