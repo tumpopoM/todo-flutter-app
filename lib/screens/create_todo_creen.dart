@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/todo_provider.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class CreateTodoScreen extends ConsumerStatefulWidget {
   const CreateTodoScreen({super.key});
@@ -12,6 +15,7 @@ class CreateTodoScreen extends ConsumerStatefulWidget {
 class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
+  String? _base64Image;
 
   void createTodo() {
     final title = titleController.text;
@@ -22,6 +26,20 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
     ref.read(todoProvider.notifier).addTodo(title, description);
 
     Navigator.pop(context);
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      final bytes = await File(image.path).readAsBytes();
+
+      setState(() {
+        _base64Image = base64Encode(bytes);
+      });
+    }
   }
 
   @override
@@ -43,6 +61,10 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(onPressed: createTodo, child: const Text("Create")),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: const Text("Select Image"),
+            ),
           ],
         ),
       ),
