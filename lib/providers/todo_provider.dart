@@ -31,9 +31,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     } else if (_sortType == "date") {
       filtered.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     } else if (_sortType == "status") {
-      filtered.sort(
-        (a, b) => a.isDone.toString().compareTo(b.isDone.toString()),
-      );
+      filtered.sort((a, b) => a.status.compareTo(b.status.toString()));
     }
 
     state = filtered;
@@ -60,7 +58,9 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
   void toggleTodo(String id) {
     _allTodos = _allTodos.map((todo) {
       if (todo.id == id) {
-        return todo.copyWith(isDone: !todo.isDone);
+        return todo.copyWith(
+          status: todo.status == "IN_PROGRESS" ? "COMPLETED" : "IN_PROGRESS",
+        );
       }
       return todo;
     }).toList();

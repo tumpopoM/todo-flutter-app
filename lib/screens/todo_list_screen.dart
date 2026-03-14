@@ -73,7 +73,7 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
 
                       return ListTile(
                         leading: Checkbox(
-                          value: todo.isDone,
+                          value: todo.status == "COMPLETED",
                           onChanged: (_) {
                             ref.read(todoProvider.notifier).toggleTodo(todo.id);
                           },
