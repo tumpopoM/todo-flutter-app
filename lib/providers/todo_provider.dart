@@ -69,6 +69,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     String description,
     DateTime createdAt,
     String? image,
+    String status,
   ) {
     _allTodos = _allTodos.map((todo) {
       if (todo.id == id) {
@@ -77,6 +78,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
           description: description,
           createdAt: createdAt,
           image: image,
+          status: status,
         );
       }
       return todo;

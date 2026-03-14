@@ -20,6 +20,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
   late TextEditingController descriptionController;
   String? _base64Image;
   late DateTime selectedDate;
+  late String status;
 
   @override
   void initState() {
@@ -34,6 +35,8 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
     selectedDate = widget.todo.createdAt;
 
     _base64Image = widget.todo.image;
+
+    status = widget.todo.status;
   }
 
   void updateTodo() {
@@ -56,7 +59,14 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
     );
     ref
         .read(todoProvider.notifier)
-        .updateTodo(widget.todo.id, title, description, dateTime, _base64Image);
+        .updateTodo(
+          widget.todo.id,
+          title,
+          description,
+          dateTime,
+          _base64Image,
+          status,
+        );
 
     Navigator.pop(context);
   }
@@ -122,6 +132,24 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 12),
+            DropdownButtonFormField<String>(
+              value: status,
+              decoration: const InputDecoration(labelText: "Status"),
+              items: const [
+                DropdownMenuItem(
+                  value: "IN_PROGRESS",
+                  child: Text("IN_PROGRESS"),
+                ),
+                DropdownMenuItem(value: "COMPLETED", child: Text("COMPLETED")),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  status = value!;
+                });
+              },
+            ),
+
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: pickImage,
