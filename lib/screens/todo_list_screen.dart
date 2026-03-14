@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/screens/create_todo_creen.dart';
@@ -73,12 +75,30 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                       final todo = todos[index];
 
                       return ListTile(
-                        leading: Checkbox(
-                          value: todo.status == "COMPLETED",
-                          onChanged: (_) {
-                            ref.read(todoProvider.notifier).toggleTodo(todo.id);
-                          },
+                        leading: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Checkbox(
+                              value: todo.status == "COMPLETED",
+                              onChanged: (_) {
+                                ref
+                                    .read(todoProvider.notifier)
+                                    .toggleTodo(todo.id);
+                              },
+                            ),
+                            if (todo.image != null)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: Image.memory(
+                                  base64Decode(todo.image!),
+                                  width: 30,
+                                  height: 30,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                          ],
                         ),
+
                         title: Text(todo.title),
                         subtitle: Text(todo.description),
                         trailing: IconButton(

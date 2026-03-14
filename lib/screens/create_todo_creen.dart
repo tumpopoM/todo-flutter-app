@@ -23,7 +23,7 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
 
     if (title.isEmpty) return;
 
-    ref.read(todoProvider.notifier).addTodo(title, description);
+    ref.read(todoProvider.notifier).addTodo(title, description, _base64Image);
 
     Navigator.pop(context);
   }
@@ -60,11 +60,19 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
               decoration: const InputDecoration(labelText: "Description"),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: createTodo, child: const Text("Create")),
             ElevatedButton(
               onPressed: _pickImage,
               child: const Text("Select Image"),
             ),
+            const SizedBox(height: 20),
+            if (_base64Image != null)
+              Image.memory(
+                base64Decode(_base64Image!),
+                height: 120,
+                fit: BoxFit.cover,
+              ),
+            const SizedBox(height: 20),
+            ElevatedButton(onPressed: createTodo, child: const Text("Create")),
           ],
         ),
       ),

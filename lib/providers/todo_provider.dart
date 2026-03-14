@@ -45,13 +45,13 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     state = filtered;
   }
 
-  void addTodo(String title, String description) {
+  void addTodo(String title, String description, String? image) {
     final todo = Todo(
       id: uuid.v4(),
       title: title,
       description: description,
       createdAt: DateTime.now(),
-      image: null,
+      image: image,
     );
 
     _allTodos = [..._allTodos, todo];
