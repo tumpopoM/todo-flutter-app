@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/screens/create_todo_creen.dart';
 import '../providers/todo_provider.dart';
+import 'edit_todo_screen.dart';
 
 class TodoListScreen extends ConsumerStatefulWidget {
   const TodoListScreen({super.key});
@@ -86,6 +87,14 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                             ref.read(todoProvider.notifier).removeTodo(todo.id);
                           },
                         ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => EditTodoScreen(todo: todo),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
