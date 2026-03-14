@@ -50,6 +50,16 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     _applyFilters();
   }
 
+  void updateTodo(String id, String title, String description) {
+    _allTodos = _allTodos.map((todo) {
+      if (todo.id == id) {
+        return todo.copyWith(title: title, description: description);
+      }
+      return todo;
+    }).toList();
+    _applyFilters();
+  }
+
   void removeTodo(String id) {
     _allTodos.removeWhere((todo) => todo.id == id);
     _applyFilters();
