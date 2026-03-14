@@ -45,12 +45,17 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     state = filtered;
   }
 
-  void addTodo(String title, String description, String? image) {
+  void addTodo(
+    String title,
+    String description,
+    DateTime createdAt,
+    String? image,
+  ) {
     final todo = Todo(
       id: uuid.v4(),
       title: title,
       description: description,
-      createdAt: DateTime.now(),
+      createdAt: createdAt,
       image: image,
     );
 
@@ -58,10 +63,21 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     _applyFilters();
   }
 
-  void updateTodo(String id, String title, String description) {
+  void updateTodo(
+    String id,
+    String title,
+    String description,
+    DateTime createdAt,
+    String? image,
+  ) {
     _allTodos = _allTodos.map((todo) {
       if (todo.id == id) {
-        return todo.copyWith(title: title, description: description);
+        return todo.copyWith(
+          title: title,
+          description: description,
+          createdAt: createdAt,
+          image: image,
+        );
       }
       return todo;
     }).toList();

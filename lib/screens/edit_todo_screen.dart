@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import '../models/todo_model.dart';
 import '../providers/todo_provider.dart';
 
@@ -15,6 +18,8 @@ class EditTodoScreen extends ConsumerStatefulWidget {
 class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
+  String? _base64Image;
+  late DateTime selectedDate;
 
   @override
   void initState() {
@@ -25,19 +30,64 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
     descriptionController = TextEditingController(
       text: widget.todo.description,
     );
+
+    selectedDate = widget.todo.createdAt;
+
+    _base64Image = widget.todo.image;
   }
 
   void updateTodo() {
     final title = titleController.text;
     final description = descriptionController.text;
 
-    if (title.isEmpty) return;
+    if (title.isEmpty || title.length > 100) {
+      return;
+    }
 
+    final now = DateTime.now();
+
+    final dateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      now.hour,
+      now.minute,
+      now.second,
+    );
     ref
         .read(todoProvider.notifier)
-        .updateTodo(widget.todo.id, title, description);
+        .updateTodo(widget.todo.id, title, description, dateTime, _base64Image);
 
     Navigator.pop(context);
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      final bytes = await image.readAsBytes();
+
+      setState(() {
+        _base64Image = base64Encode(bytes);
+      });
+    }
+  }
+
+  Future<void> pickDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (date != null) {
+      setState(() {
+        selectedDate = date;
+      });
+    }
   }
 
   @override
@@ -54,16 +104,33 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
               controller: titleController,
               decoration: const InputDecoration(labelText: "Title"),
             ),
-
             const SizedBox(height: 12),
-
             TextField(
               controller: descriptionController,
               decoration: const InputDecoration(labelText: "Description"),
             ),
-
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Date : ${selectedDate.toLocal().toString().split(' ')[0]}",
+                ),
+                TextButton(
+                  onPressed: pickDate,
+                  child: const Text("Change Date"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: pickImage,
+              child: const Text("Change Image"),
+            ),
+            const SizedBox(height: 12),
+            if (_base64Image != null)
+              Image.memory(base64Decode(_base64Image!), height: 120),
             const SizedBox(height: 20),
-
             ElevatedButton(onPressed: updateTodo, child: const Text("Update")),
           ],
         ),

@@ -16,14 +16,30 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   String? _base64Image;
+  DateTime selectedDate = DateTime.now();
 
   void createTodo() {
     final title = titleController.text;
     final description = descriptionController.text;
 
-    if (title.isEmpty) return;
+    if (title.isEmpty || title.length > 100) {
+      return;
+    }
 
-    ref.read(todoProvider.notifier).addTodo(title, description, _base64Image);
+    final now = DateTime.now();
+
+    final dateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      now.hour,
+      now.minute,
+      now.second,
+    );
+
+    ref
+        .read(todoProvider.notifier)
+        .addTodo(title, description, dateTime, _base64Image);
 
     Navigator.pop(context);
   }
@@ -42,6 +58,21 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
     }
   }
 
+  Future<void> pickDate() async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+
+    if (date != null) {
+      setState(() {
+        selectedDate = date;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +83,7 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
           children: [
             TextField(
               controller: titleController,
+              maxLength: 100,
               decoration: const InputDecoration(labelText: "Title"),
             ),
             const SizedBox(height: 12),
@@ -59,6 +91,20 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
               controller: descriptionController,
               decoration: const InputDecoration(labelText: "Description"),
             ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
+                ),
+                TextButton(
+                  onPressed: pickDate,
+                  child: const Text("Select Date"),
+                ),
+              ],
+            ),
+
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _pickImage,
