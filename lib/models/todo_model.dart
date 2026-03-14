@@ -4,7 +4,7 @@ class Todo {
   final String description;
   final DateTime createdAt;
   final String? image;
-  final bool isDone;
+  final String status;
 
   Todo({
     required this.id,
@@ -12,7 +12,7 @@ class Todo {
     required this.description,
     required this.createdAt,
     this.image,
-    this.isDone = false,
+    this.status = "IN_PROGRESS",
   });
 
   Todo copyWith({
@@ -21,7 +21,7 @@ class Todo {
     String? description,
     DateTime? createdAt,
     String? image,
-    bool? isDone,
+    String? status,
   }) {
     return Todo(
       id: id ?? this.id,
@@ -29,7 +29,7 @@ class Todo {
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
       image: image ?? this.image,
-      isDone: isDone ?? this.isDone,
+      status: status ?? this.status,
     );
   }
 }
