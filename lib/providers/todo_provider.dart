@@ -6,7 +6,9 @@ import 'package:uuid/uuid.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TodoNotifier extends StateNotifier<List<Todo>> {
-  TodoNotifier() : super([]);
+  TodoNotifier() : super([]) {
+    loadTodos();
+  }
 
   final uuid = const Uuid();
   String _searchQuery = "";
