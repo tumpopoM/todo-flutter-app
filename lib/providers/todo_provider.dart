@@ -113,6 +113,15 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
         .toList();
     await prefs.setStringList('todos', jsonList);
   }
+
+  Future<void> loadTodos() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = prefs.getStringList('todos') ?? [];
+    _allTodos = jsonList
+        .map((jsonStr) => Todo.fromJson(jsonDecode(jsonStr)))
+        .toList();
+    _applyFilters();
+  }
 }
 
 final todoProvider = StateNotifierProvider<TodoNotifier, List<Todo>>((ref) {
