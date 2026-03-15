@@ -113,6 +113,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
             TextField(
               controller: titleController,
               decoration: const InputDecoration(labelText: "Title"),
+              maxLength: 100,
             ),
             const SizedBox(height: 12),
             TextField(
