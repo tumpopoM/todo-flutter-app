@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/todo_model.dart';
 import 'package:uuid/uuid.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TodoNotifier extends StateNotifier<List<Todo>> {
   TodoNotifier() : super([]);
@@ -101,6 +104,14 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       return todo;
     }).toList();
     _applyFilters();
+  }
+
+  Future<void> saveTodos() async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonList = _allTodos
+        .map((todo) => jsonEncode(todo.toJson()))
+        .toList();
+    await prefs.setStringList('todos', jsonList);
   }
 }
 

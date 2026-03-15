@@ -32,4 +32,26 @@ class Todo {
       status: status ?? this.status,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "description": description,
+      "createdAt": createdAt.toIso8601String(),
+      "image": image,
+      "status": status,
+    };
+  }
+
+  factory Todo.fromJson(Map<String, dynamic> json) {
+    return Todo(
+      id: json["id"],
+      title: json["title"],
+      description: json["description"],
+      createdAt: DateTime.parse(json["createdAt"]),
+      image: json["image"],
+      status: json["status"],
+    );
+  }
 }
