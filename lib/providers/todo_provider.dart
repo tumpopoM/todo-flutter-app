@@ -66,6 +66,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
 
     _allTodos = [..._allTodos, todo];
     _applyFilters();
+    saveTodos();
   }
 
   void updateTodo(
@@ -89,11 +90,13 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       return todo;
     }).toList();
     _applyFilters();
+    saveTodos();
   }
 
   void removeTodo(String id) {
     _allTodos.removeWhere((todo) => todo.id == id);
     _applyFilters();
+    saveTodos();
   }
 
   void toggleTodo(String id) {
@@ -106,6 +109,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       return todo;
     }).toList();
     _applyFilters();
+    saveTodos();
   }
 
   Future<void> saveTodos() async {
