@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/todo_model.dart';
 import '../providers/todo_provider.dart';
 import '../utils/picker_utils.dart';
+import '../widgets/app_text_field.dart';
 
 class EditTodoScreen extends ConsumerStatefulWidget {
   final Todo todo;
@@ -86,45 +87,15 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
 
         child: Column(
           children: [
-            TextField(
+            AppTextField(
               controller: titleController,
+              label: "Title",
               maxLength: 100,
-              decoration: InputDecoration(
-                labelText: "Title",
-                filled: true,
-                fillColor: Colors.grey.shade100,
-                labelStyle: const TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black,
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                hintStyle: const TextStyle(fontSize: 16.0, color: Colors.black),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(14.0)),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              cursorColor: Colors.black,
             ),
             const SizedBox(height: 16.0),
-            TextField(
+            AppTextField(
               controller: descriptionController,
-              decoration: InputDecoration(
-                labelText: "Description",
-                filled: true,
-                labelStyle: const TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black,
-                ),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                hintStyle: const TextStyle(fontSize: 16.0, color: Colors.black),
-                fillColor: Colors.grey.shade100,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(14.0)),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              cursorColor: Colors.black,
+              label: "Description",
             ),
             const SizedBox(height: 16.0),
             Row(
