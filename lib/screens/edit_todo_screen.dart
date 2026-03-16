@@ -163,6 +163,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                 if (imageBase64 != null) {
                   setState(() {
                     _base64Image = imageBase64;
+                    imageBytes = base64Decode(imageBase64);
                   });
                 }
               },
