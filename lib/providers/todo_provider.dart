@@ -37,7 +37,9 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
       filtered.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     } else if (_sortType == "status") {
       filtered.sort((a, b) {
-        if (a.status == b.status) return 0;
+        if (a.status == b.status) {
+          return a.createdAt.compareTo(b.createdAt);
+        }
 
         if (a.status == "IN_PROGRESS") {
           return -1;
