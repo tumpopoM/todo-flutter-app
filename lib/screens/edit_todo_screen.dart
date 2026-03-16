@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,6 +22,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
   String? _base64Image;
   late DateTime selectedDate;
   late String status;
+  Uint8List? imageBytes;
 
   @override
   void initState() {
@@ -37,6 +39,10 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
     _base64Image = widget.todo.image;
 
     status = widget.todo.status;
+
+    if (_base64Image != null) {
+      imageBytes = base64Decode(_base64Image!);
+    }
   }
 
   void updateTodo() {
@@ -208,8 +214,11 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
               ),
             ),
             const SizedBox(height: 16.0),
-            if (_base64Image != null)
-              Image.memory(base64Decode(_base64Image!), height: 120),
+            if (imageBytes != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(14.0),
+                child: Image.memory(imageBytes!, height: 120.0),
+              ),
           ],
         ),
       ),
