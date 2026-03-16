@@ -20,13 +20,13 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
+        elevation: 0.0,
+        // backgroundColor: Colors.white,
         title: const Text(
           'Todo List',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 24,
+            fontSize: 24.0,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -35,30 +35,29 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
           children: [
-            Container(
-              margin: const EdgeInsets.only(top: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(14),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search...",
-                  prefixIcon: Icon(Icons.search),
-                  border: InputBorder.none,
+            TextField(
+              decoration: InputDecoration(
+                hintText: "Search...",
+                prefixIcon: Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(14.0)),
+                  borderSide: BorderSide.none,
                 ),
-                onChanged: (value) {
-                  ref.read(todoProvider.notifier).setSearchQuery(value);
-                },
               ),
+              onChanged: (value) {
+                ref.read(todoProvider.notifier).setSearchQuery(value);
+              },
+              cursorColor: Colors.black,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
                   "Sort by",
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0),
                 ),
                 DropdownButton(
                   value: _selectedSort,
@@ -79,7 +78,7 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10.0),
             Expanded(
               child: todos.isEmpty
                   ? const Center(
@@ -91,13 +90,13 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                   : ListView.separated(
                       itemCount: todos.length,
                       separatorBuilder: (context, index) {
-                        return const SizedBox(height: 10);
+                        return const SizedBox(height: 10.0);
                       },
                       itemBuilder: (context, index) {
                         final todo = todos[index];
 
                         return ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(14.0),
 
                           child: Dismissible(
                             key: Key(todo.id),
@@ -111,10 +110,10 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
 
                             background: Container(
                               alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.only(right: 20),
+                              padding: const EdgeInsets.only(right: 20.0),
                               decoration: BoxDecoration(
                                 color: Colors.red,
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(14.0),
                               ),
                               child: const Icon(
                                 Icons.delete,
@@ -124,11 +123,11 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
 
                             child: Material(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(14),
+                              borderRadius: BorderRadius.circular(14.0),
                               child: ListTile(
                                 tileColor: Colors.white,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
+                                  borderRadius: BorderRadius.circular(14.0),
                                 ),
 
                                 leading: GestureDetector(
@@ -139,8 +138,8 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                   },
 
                                   child: Container(
-                                    width: 24,
-                                    height: 24,
+                                    width: 24.0,
+                                    height: 24.0,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: todo.status == "COMPLETED"
@@ -150,13 +149,13 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                         color: todo.status == "COMPLETED"
                                             ? Colors.blue
                                             : Colors.grey,
-                                        width: 2,
+                                        width: 2.0,
                                       ),
                                     ),
                                     child: todo.status == "COMPLETED"
                                         ? const Icon(
                                             Icons.check,
-                                            size: 16,
+                                            size: 16.0,
                                             color: Colors.white,
                                           )
                                         : null,
@@ -169,7 +168,7 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 16,
+                                    fontSize: 16.0,
                                   ),
                                 ),
 

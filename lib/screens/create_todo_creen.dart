@@ -76,50 +76,120 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Create Todo")),
+      appBar: AppBar(
+        title: const Text(
+          "Create Todo",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: titleController,
-              maxLength: 100,
-              decoration: const InputDecoration(labelText: "Title"),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: descriptionController,
-              decoration: const InputDecoration(labelText: "Description"),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextField(
+                controller: titleController,
+                maxLength: 100,
+                decoration: InputDecoration(
+                  labelText: "Title",
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  labelStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(14.0)),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-                TextButton(
-                  onPressed: pickDate,
-                  child: const Text("Select Date"),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text("Select Image"),
-            ),
-            const SizedBox(height: 20),
-            if (_base64Image != null)
-              Image.memory(
-                base64Decode(_base64Image!),
-                height: 120,
-                fit: BoxFit.cover,
+                cursorColor: Colors.black,
               ),
-            const SizedBox(height: 20),
-            ElevatedButton(onPressed: createTodo, child: const Text("Create")),
-          ],
+              const SizedBox(height: 16.0),
+              TextField(
+                controller: descriptionController,
+                decoration: InputDecoration(
+                  labelText: "Description",
+                  filled: true,
+                  labelStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  hintStyle: const TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.black,
+                  ),
+                  fillColor: Colors.grey.shade100,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(14.0)),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                cursorColor: Colors.black,
+              ),
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                  TextButton(
+                    onPressed: pickDate,
+                    child: const Text(
+                      "Select Date",
+                      style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16.0),
+              TextButton(
+                onPressed: _pickImage,
+                child: const Text(
+                  "Select Image",
+                  style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+              if (_base64Image != null)
+                Image.memory(
+                  base64Decode(_base64Image!),
+                  height: 120.0,
+                  fit: BoxFit.cover,
+                ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: createTodo,
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 14.0),
+              backgroundColor: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14.0),
+              ),
+            ),
+            child: const Text(
+              "Create Todo",
+              style: TextStyle(fontSize: 16.0, color: Colors.white),
+            ),
+          ),
         ),
       ),
     );
