@@ -120,3 +120,19 @@ flutter run
 ## Author
 
 Developed as a Flutter coding assignment project.
+
+---
+
+## Screenshots
+
+### Todo List Screen
+
+![Todo List](screenshots/todo_list.png)
+
+### Create Todo Screen
+
+![Create Todo](screenshots/create_todo.png)
+
+### Edit Todo Screen
+
+![Edit Todo](screenshots/edit_todo.png)
