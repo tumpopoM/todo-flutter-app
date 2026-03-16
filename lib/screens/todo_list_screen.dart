@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_flutter_app/screens/create_todo_creen.dart';
+import 'package:todo_flutter_app/theme/app_theme.dart';
 import '../providers/todo_provider.dart';
 import 'edit_todo_screen.dart';
 
@@ -142,11 +143,11 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: todo.status == "COMPLETED"
-                                          ? Colors.blue
+                                          ? AppTheme.primaryColor
                                           : Colors.transparent,
                                       border: Border.all(
                                         color: todo.status == "COMPLETED"
-                                            ? Colors.blue
+                                            ? AppTheme.primaryColor
                                             : Colors.grey,
                                         width: 2.0,
                                       ),
@@ -197,7 +198,6 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
             MaterialPageRoute(builder: (context) => const CreateTodoScreen()),
           );
         },
-        backgroundColor: Colors.blue,
         shape: const CircleBorder(),
         child: const Icon(Icons.add, color: Colors.white),
       ),

@@ -191,7 +191,6 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
             onPressed: updateTodo,
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 14.0),
-              backgroundColor: Colors.blue,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14.0),
               ),
