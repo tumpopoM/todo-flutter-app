@@ -21,7 +21,6 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        // backgroundColor: Colors.white,
         title: const Text(
           'Todo List',
           style: TextStyle(
