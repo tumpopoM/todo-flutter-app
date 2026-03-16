@@ -189,9 +189,15 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                   todo.title,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16.0,
+                                    decoration: todo.status == "COMPLETED"
+                                        ? TextDecoration.lineThrough
+                                        : TextDecoration.none,
+                                    color: todo.status == "COMPLETED"
+                                        ? Colors.grey.shade500
+                                        : Colors.black,
                                   ),
                                 ),
 
