@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_flutter_app/providers/todo_provider.dart';
-import 'package:todo_flutter_app/models/todo_model.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
