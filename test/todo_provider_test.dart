@@ -56,16 +56,4 @@ void main() {
 
     expect(notifier.state.first.status, "COMPLETED");
   });
-
-  test('toggleTodo should change status', () {
-    final notifier = TodoNotifier();
-
-    notifier.addTodo("Test", "Test desc", DateTime.now(), null);
-
-    final id = notifier.state.first.id;
-
-    notifier.toggleTodo(id);
-
-    expect(notifier.state.first.status, "COMPLETED");
-  });
 }
