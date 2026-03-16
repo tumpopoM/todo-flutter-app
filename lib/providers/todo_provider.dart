@@ -25,6 +25,18 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     _applyFilters();
   }
 
+  int _compareStatus(Todo a, Todo b) {
+    if (a.status == b.status) {
+      return a.createdAt.compareTo(b.createdAt);
+    }
+
+    if (a.status == "IN_PROGRESS") {
+      return -1;
+    }
+
+    return 1;
+  }
+
   void _applyFilters() {
     final filtered = _allTodos.where((todo) {
       return todo.title.toLowerCase().contains(_searchQuery) ||
@@ -36,17 +48,7 @@ class TodoNotifier extends StateNotifier<List<Todo>> {
     } else if (_sortType == "date") {
       filtered.sort((a, b) => a.createdAt.compareTo(b.createdAt));
     } else if (_sortType == "status") {
-      filtered.sort((a, b) {
-        if (a.status == b.status) {
-          return a.createdAt.compareTo(b.createdAt);
-        }
-
-        if (a.status == "IN_PROGRESS") {
-          return -1;
-        } else {
-          return 1;
-        }
-      });
+      filtered.sort(_compareStatus);
     }
 
     state = filtered;
