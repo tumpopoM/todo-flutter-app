@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import '../models/todo_model.dart';
 import '../providers/todo_provider.dart';
+import '../utils/picker_utils.dart';
 
 class EditTodoScreen extends ConsumerStatefulWidget {
   final Todo todo;
@@ -77,35 +76,6 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
     Navigator.pop(context);
   }
 
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      final bytes = await image.readAsBytes();
-
-      setState(() {
-        _base64Image = base64Encode(bytes);
-      });
-    }
-  }
-
-  Future<void> pickDate() async {
-    final date = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (date != null) {
-      setState(() {
-        selectedDate = date;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,7 +135,14 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                   style: TextStyle(fontSize: 16.0),
                 ),
                 TextButton(
-                  onPressed: pickDate,
+                  onPressed: () async {
+                    final date = await pickDate(context, selectedDate);
+                    if (date != null) {
+                      setState(() {
+                        selectedDate = date;
+                      });
+                    }
+                  },
                   child: const Text(
                     "Change Date",
                     style: TextStyle(fontSize: 16.0, color: Colors.blue),
@@ -207,7 +184,14 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
             ),
             const SizedBox(height: 16.0),
             TextButton(
-              onPressed: _pickImage,
+              onPressed: () async {
+                final imageBase64 = await pickImageBase64();
+                if (imageBase64 != null) {
+                  setState(() {
+                    _base64Image = imageBase64;
+                  });
+                }
+              },
               child: const Text(
                 "Change Image",
                 style: TextStyle(fontSize: 16.0, color: Colors.blue),
@@ -217,7 +201,11 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
             if (imageBytes != null)
               ClipRRect(
                 borderRadius: BorderRadius.circular(14.0),
-                child: Image.memory(imageBytes!, height: 120.0),
+                child: Image.memory(
+                  imageBytes!,
+                  height: 120.0,
+                  fit: BoxFit.cover,
+                ),
               ),
           ],
         ),

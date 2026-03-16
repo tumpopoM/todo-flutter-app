@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/todo_provider.dart';
 import 'dart:convert';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+import '../utils/picker_utils.dart';
 
 class CreateTodoScreen extends ConsumerStatefulWidget {
   const CreateTodoScreen({super.key});
@@ -42,35 +41,6 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
         .addTodo(title, description, dateTime, _base64Image);
 
     Navigator.pop(context);
-  }
-
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      final bytes = await File(image.path).readAsBytes();
-
-      setState(() {
-        _base64Image = base64Encode(bytes);
-      });
-    }
-  }
-
-  Future<void> pickDate() async {
-    final date = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-
-    if (date != null) {
-      setState(() {
-        selectedDate = date;
-      });
-    }
   }
 
   @override
@@ -146,7 +116,14 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
                     style: TextStyle(fontSize: 16.0),
                   ),
                   TextButton(
-                    onPressed: pickDate,
+                    onPressed: () async {
+                      final date = await pickDate(context, selectedDate);
+                      if (date != null) {
+                        setState(() {
+                          selectedDate = date;
+                        });
+                      }
+                    },
                     child: const Text(
                       "Select Date",
                       style: TextStyle(fontSize: 16.0, color: Colors.blue),
@@ -156,7 +133,14 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
               ),
               const SizedBox(height: 16.0),
               TextButton(
-                onPressed: _pickImage,
+                onPressed: () async {
+                  final imageBase64 = await pickImageBase64();
+                  if (imageBase64 != null) {
+                    setState(() {
+                      _base64Image = imageBase64;
+                    });
+                  }
+                },
                 child: const Text(
                   "Select Image",
                   style: TextStyle(fontSize: 16.0, color: Colors.blue),
@@ -164,10 +148,13 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
               ),
               const SizedBox(height: 16.0),
               if (_base64Image != null)
-                Image.memory(
-                  base64Decode(_base64Image!),
-                  height: 120.0,
-                  fit: BoxFit.cover,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14.0),
+                  child: Image.memory(
+                    base64Decode(_base64Image!),
+                    height: 120.0,
+                    fit: BoxFit.cover,
+                  ),
                 ),
             ],
           ),
