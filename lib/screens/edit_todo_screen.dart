@@ -92,18 +92,18 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
               label: "Title",
               maxLength: 100,
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 16),
             AppTextField(
               controller: descriptionController,
               label: "Description",
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 16),
                 ),
                 TextButton(
                   onPressed: () async {
@@ -116,22 +116,22 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                   },
                   child: const Text(
                     "Change Date",
-                    style: TextStyle(fontSize: 16.0, color: Colors.black),
+                    style: TextStyle(fontSize: 16, color: Colors.black),
                   ),
                 ),
               ],
             ),
 
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text("Status:", style: TextStyle(fontSize: 16.0)),
+                const Text("Status:", style: TextStyle(fontSize: 16)),
                 DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: status,
                     style: const TextStyle(
-                      fontSize: 16.0,
+                      fontSize: 16,
                       color: Colors.black,
                       fontWeight: FontWeight.w600,
                     ),
@@ -160,7 +160,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 16),
             TextButton(
               onPressed: () async {
                 final imageBase64 = await pickImageBase64();
@@ -173,16 +173,16 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
               },
               child: const Text(
                 "Change Image",
-                style: TextStyle(fontSize: 16.0, color: Colors.black),
+                style: TextStyle(fontSize: 16, color: Colors.black),
               ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 16),
             if (imageBytes != null)
               ClipRRect(
-                borderRadius: BorderRadius.circular(14.0),
+                borderRadius: BorderRadius.circular(14),
                 child: Image.memory(
                   imageBytes!,
-                  height: 120.0,
+                  height: 120,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -191,18 +191,18 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: ElevatedButton(
             onPressed: updateTodo,
             style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14.0),
+              padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14.0),
+                borderRadius: BorderRadius.circular(14),
               ),
             ),
             child: const Text(
               "Update Todo",
-              style: TextStyle(fontSize: 16.0, color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ),
         ),

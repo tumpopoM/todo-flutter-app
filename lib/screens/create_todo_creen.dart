@@ -52,13 +52,13 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
           "Create Todo",
           style: TextStyle(
             color: Colors.black,
-            fontSize: 24.0,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -67,18 +67,18 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
                 label: "Title",
                 maxLength: 100,
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16),
               AppTextField(
                 controller: descriptionController,
                 label: "Description",
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
-                    style: TextStyle(fontSize: 16.0),
+                    style: TextStyle(fontSize: 16),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -91,12 +91,12 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
                     },
                     child: const Text(
                       "Select Date",
-                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16),
               TextButton(
                 onPressed: () async {
                   final imageBase64 = await pickImageBase64();
@@ -108,16 +108,16 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
                 },
                 child: const Text(
                   "Select Image",
-                  style: TextStyle(fontSize: 16.0, color: Colors.black),
+                  style: TextStyle(fontSize: 16, color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 16),
               if (_base64Image != null)
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(14.0),
+                  borderRadius: BorderRadius.circular(14),
                   child: Image.memory(
                     base64Decode(_base64Image!),
-                    height: 120.0,
+                    height: 120,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -127,18 +127,18 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: ElevatedButton(
             onPressed: createTodo,
             style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 14.0),
+              padding: const EdgeInsets.symmetric(vertical: 14),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(14.0),
+                borderRadius: BorderRadius.circular(14),
               ),
             ),
             child: const Text(
               "Create Todo",
-              style: TextStyle(fontSize: 16.0, color: Colors.white),
+              style: TextStyle(fontSize: 16, color: Colors.white),
             ),
           ),
         ),
