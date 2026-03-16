@@ -81,10 +81,33 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
             const SizedBox(height: 10.0),
             Expanded(
               child: todos.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "No Todo yet.\nTap + to create one",
-                        textAlign: TextAlign.center,
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.check_circle_outline,
+                            size: 80.0,
+                            color: Colors.grey,
+                          ),
+
+                          SizedBox(height: 16.0),
+
+                          Text(
+                            "No Todo Yet",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                          SizedBox(height: 8.0),
+
+                          Text(
+                            "Tap + to create your first task",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ],
                       ),
                     )
                   : ListView.separated(
