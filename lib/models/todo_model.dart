@@ -1,10 +1,12 @@
+enum TodoStatus { IN_PROGRESS, COMPLETED }
+
 class Todo {
   final String id;
   final String title;
   final String description;
   final DateTime createdAt;
   final String? image;
-  final String status;
+  final TodoStatus status;
 
   Todo({
     required this.id,
@@ -12,7 +14,7 @@ class Todo {
     required this.description,
     required this.createdAt,
     this.image,
-    this.status = "IN_PROGRESS",
+    this.status = TodoStatus.IN_PROGRESS,
   });
 
   Todo copyWith({
@@ -21,7 +23,7 @@ class Todo {
     String? description,
     DateTime? createdAt,
     String? image,
-    String? status,
+    TodoStatus? status,
   }) {
     return Todo(
       id: id ?? this.id,
@@ -40,7 +42,7 @@ class Todo {
       "description": description,
       "createdAt": createdAt.toIso8601String(),
       "image": image,
-      "status": status,
+      "status": status.name,
     };
   }
 
@@ -51,7 +53,7 @@ class Todo {
       description: json["description"],
       createdAt: DateTime.parse(json["createdAt"]),
       image: json["image"],
-      status: json["status"],
+      status: TodoStatus.values.firstWhere((e) => e.name == json["status"]),
     );
   }
 }
