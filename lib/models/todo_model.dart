@@ -53,7 +53,7 @@ class Todo {
       description: json["description"],
       createdAt: DateTime.parse(json["createdAt"]),
       image: json["image"],
-      status: TodoStatus.values.firstWhere((e) => e.name == json["status"]),
+      status: TodoStatus.values.byName(json["status"]),
     );
   }
 }

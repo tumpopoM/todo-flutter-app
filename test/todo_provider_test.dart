@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_flutter_app/models/todo_model.dart';
 import 'package:todo_flutter_app/providers/todo_provider.dart';
 
 void main() {
@@ -39,7 +40,7 @@ void main() {
       "New desc",
       DateTime.now(),
       null,
-      "IN_PROGRESS",
+      TodoStatus.IN_PROGRESS,
     );
 
     expect(notifier.state.first.title, "New title");
@@ -54,6 +55,19 @@ void main() {
 
     notifier.toggleTodo(id);
 
-    expect(notifier.state.first.status, "COMPLETED");
+    expect(notifier.state.first.status, TodoStatus.COMPLETED);
+  });
+
+  test('loadTodos should load saved todos', () async {
+    final notifier = TodoNotifier();
+
+    notifier.addTodo("Test", "Desc", DateTime.now(), null);
+
+    await notifier.saveTodos();
+
+    final newNotifier = TodoNotifier();
+    await newNotifier.loadTodos();
+
+    expect(newNotifier.state.isNotEmpty, true);
   });
 }

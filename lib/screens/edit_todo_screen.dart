@@ -21,7 +21,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
   late TextEditingController descriptionController;
   String? _base64Image;
   late DateTime selectedDate;
-  late String status;
+  late TodoStatus status;
   Uint8List? imageBytes;
 
   @override
@@ -128,7 +128,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
               children: [
                 const Text("Status:", style: TextStyle(fontSize: 16)),
                 DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
+                  child: DropdownButton<TodoStatus>(
                     value: status,
                     style: const TextStyle(
                       fontSize: 16,
@@ -141,15 +141,15 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                     ),
                     items: const [
                       DropdownMenuItem(
-                        value: "IN_PROGRESS",
+                        value: TodoStatus.IN_PROGRESS,
                         child: Text("In Progress"),
                       ),
                       DropdownMenuItem(
-                        value: "COMPLETED",
+                        value: TodoStatus.COMPLETED,
                         child: Text("Completed"),
                       ),
                     ],
-                    onChanged: (value) {
+                    onChanged: (TodoStatus? value) {
                       if (value != null) {
                         setState(() {
                           status = value;

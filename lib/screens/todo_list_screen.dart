@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_flutter_app/models/todo_model.dart';
 import 'package:todo_flutter_app/screens/create_todo_creen.dart';
 import 'package:todo_flutter_app/theme/app_theme.dart';
 import '../providers/todo_provider.dart';
@@ -165,17 +166,18 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                     height: 24,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: todo.status == "COMPLETED"
+                                      color: todo.status == TodoStatus.COMPLETED
                                           ? AppTheme.primaryColor
                                           : Colors.transparent,
                                       border: Border.all(
-                                        color: todo.status == "COMPLETED"
+                                        color:
+                                            todo.status == TodoStatus.COMPLETED
                                             ? AppTheme.primaryColor
                                             : Colors.grey,
                                         width: 2,
                                       ),
                                     ),
-                                    child: todo.status == "COMPLETED"
+                                    child: todo.status == TodoStatus.COMPLETED
                                         ? const Icon(
                                             Icons.check,
                                             size: 16,
@@ -192,10 +194,11 @@ class _TodoListScreenState extends ConsumerState<TodoListScreen> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 16,
-                                    decoration: todo.status == "COMPLETED"
+                                    decoration:
+                                        todo.status == TodoStatus.COMPLETED
                                         ? TextDecoration.lineThrough
                                         : TextDecoration.none,
-                                    color: todo.status == "COMPLETED"
+                                    color: todo.status == TodoStatus.COMPLETED
                                         ? Colors.grey.shade500
                                         : Colors.black,
                                   ),
