@@ -91,7 +91,7 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
                     },
                     child: const Text(
                       "Select Date",
-                      style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
                     ),
                   ),
                 ],
@@ -108,7 +108,7 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
                 },
                 child: const Text(
                   "Select Image",
-                  style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                  style: TextStyle(fontSize: 16.0, color: Colors.black),
                 ),
               ),
               const SizedBox(height: 16.0),

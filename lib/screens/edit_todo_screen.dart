@@ -116,7 +116,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                   },
                   child: const Text(
                     "Change Date",
-                    style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                    style: TextStyle(fontSize: 16.0, color: Colors.black),
                   ),
                 ),
               ],
@@ -130,8 +130,11 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
                 DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: status,
-                    style: const TextStyle(fontSize: 16.0, color: Colors.blue),
-                    icon: const Icon(Icons.arrow_drop_down, color: Colors.blue),
+                    style: const TextStyle(fontSize: 16.0, color: Colors.black),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Colors.black,
+                    ),
                     items: const [
                       DropdownMenuItem(
                         value: "IN_PROGRESS",
@@ -165,7 +168,7 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
               },
               child: const Text(
                 "Change Image",
-                style: TextStyle(fontSize: 16.0, color: Colors.blue),
+                style: TextStyle(fontSize: 16.0, color: Colors.black),
               ),
             ),
             const SizedBox(height: 16.0),
