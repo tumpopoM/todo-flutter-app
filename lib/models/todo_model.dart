@@ -40,7 +40,7 @@ class Todo {
       "id": id,
       "title": title,
       "description": description,
-      "createdAt": createdAt.toIso8601String(),
+      "createdAt": createdAt.toUtc().toIso8601String(),
       "image": image,
       "status": status.name,
     };
