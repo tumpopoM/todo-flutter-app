@@ -84,109 +84,110 @@ class _EditTodoScreenState extends ConsumerState<EditTodoScreen> {
 
       body: Padding(
         padding: const EdgeInsets.all(16),
-
-        child: Column(
-          children: [
-            AppTextField(
-              controller: titleController,
-              label: "Title",
-              maxLength: 100,
-            ),
-            const SizedBox(height: 16),
-            AppTextField(
-              controller: descriptionController,
-              label: "Description",
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
-                  style: TextStyle(fontSize: 16),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    final date = await pickDate(context, selectedDate);
-                    if (date != null) {
-                      setState(() {
-                        selectedDate = date;
-                      });
-                    }
-                  },
-                  child: const Text(
-                    "Change Date",
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              AppTextField(
+                controller: titleController,
+                label: "Title",
+                maxLength: 100,
+              ),
+              const SizedBox(height: 16),
+              AppTextField(
+                controller: descriptionController,
+                label: "Description",
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Date: ${selectedDate.toLocal().toString().split(' ')[0]}",
+                    style: TextStyle(fontSize: 16),
                   ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text("Status:", style: TextStyle(fontSize: 16)),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton<TodoStatus>(
-                    value: status,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    icon: const Icon(
-                      Icons.arrow_drop_down,
-                      color: Colors.black,
-                    ),
-                    items: const [
-                      DropdownMenuItem(
-                        value: TodoStatus.IN_PROGRESS,
-                        child: Text("In Progress"),
-                      ),
-                      DropdownMenuItem(
-                        value: TodoStatus.COMPLETED,
-                        child: Text("Completed"),
-                      ),
-                    ],
-                    onChanged: (TodoStatus? value) {
-                      if (value != null) {
+                  TextButton(
+                    onPressed: () async {
+                      final date = await pickDate(context, selectedDate);
+                      if (date != null) {
                         setState(() {
-                          status = value;
+                          selectedDate = date;
                         });
                       }
                     },
+                    child: const Text(
+                      "Change Date",
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Status:", style: TextStyle(fontSize: 16)),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<TodoStatus>(
+                      value: status,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      icon: const Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.black,
+                      ),
+                      items: const [
+                        DropdownMenuItem(
+                          value: TodoStatus.IN_PROGRESS,
+                          child: Text("In Progress"),
+                        ),
+                        DropdownMenuItem(
+                          value: TodoStatus.COMPLETED,
+                          child: Text("Completed"),
+                        ),
+                      ],
+                      onChanged: (TodoStatus? value) {
+                        if (value != null) {
+                          setState(() {
+                            status = value;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: () async {
+                  final imageBase64 = await pickImageBase64();
+                  if (imageBase64 != null) {
+                    setState(() {
+                      _base64Image = imageBase64;
+                      imageBytes = base64Decode(imageBase64);
+                    });
+                  }
+                },
+                child: const Text(
+                  "Change Image",
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ),
+              const SizedBox(height: 16),
+              if (imageBytes != null)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: Image.memory(
+                    imageBytes!,
+                    height: 120,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () async {
-                final imageBase64 = await pickImageBase64();
-                if (imageBase64 != null) {
-                  setState(() {
-                    _base64Image = imageBase64;
-                    imageBytes = base64Decode(imageBase64);
-                  });
-                }
-              },
-              child: const Text(
-                "Change Image",
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ),
-            const SizedBox(height: 16),
-            if (imageBytes != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: Image.memory(
-                  imageBytes!,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: SafeArea(
