@@ -22,7 +22,7 @@ class _CreateTodoScreenState extends ConsumerState<CreateTodoScreen> {
     final title = titleController.text;
     final description = descriptionController.text;
 
-    if (title.isEmpty || title.length > 100) {
+    if (title.isEmpty || title.length > 100 || description.isEmpty) {
       return;
     }
 
