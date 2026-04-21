@@ -119,7 +119,7 @@ flutter run
 
 ## Author
 
-Developed as a Flutter coding assignment project.
+Developed by Wijitra Rattanason
 
 ---
 
